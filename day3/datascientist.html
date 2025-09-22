@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aman Chaurasia — Data Scientist | Data Analyst | Cloud</title>
+  <meta name="description" content="Portfolio of Aman Chaurasia — Data Science, Data Analysis, Cloud & DevOps projects. Resume, projects, contact and interactive demos." />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!-- placeholder favicon -->
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP for subtle animations -->
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <!-- Heroicons for small icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    /* small custom styles for things Tailwind doesn't cover inline */
+    html,body,#app{height:100%;}
+    .glass{background: rgba(255,255,255,0.06); backdrop-filter: blur(8px);} 
+    .accent-gradient{background: linear-gradient(90deg,#7c3aed,#06b6d4);}
+    /* animated gradient text */
+    .gradient-text{background:linear-gradient(90deg,#7c3aed,#06b6d4);-webkit-background-clip:text;background-clip:text;color:transparent}
+    /* project card image placeholder ratio */
+    .ratio-16-9{position:relative;padding-bottom:56.25%;}
+    .ratio-16-9 > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px}
+  </style>
+</head>
+<body class="bg-[#071024] text-slate-100 antialiased leading-relaxed">
+  <div id="app" class="min-h-screen flex flex-col">
+
+    <!-- NAV -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-gradient-to-b from-black/40 to-transparent border-b border-white/5">
+      <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+        <a href="#home" class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl accent-gradient flex items-center justify-center shadow-lg text-white font-bold">AC</div>
+          <div class="hidden sm:block">
+            <div class="text-sm font-semibold">Aman Chaurasia</div>
+            <div class="text-[11px] text-slate-400">Data Scientist · Data Analyst · Cloud</div>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="#about" class="nav-link hover:underline">About</a>
+          <a href="#skills" class="nav-link hover:underline">Skills</a>
+          <a href="#projects" class="nav-link hover:underline">Projects</a>
+          <a href="#experience" class="nav-link hover:underline">Experience</a>
+          <a href="#contact" class="nav-link hover:underline">Contact</a>
+          <a href="/resume.pdf" download class="ml-2 inline-flex items-center gap-2 px-3 py-2 bg-white text-slate-900 rounded-lg text-xs font-medium shadow">Download CV</a>
+        </nav>
+
+        <!-- mobile menu button -->
+        <div class="md:hidden">
+          <button id="menuBtn" aria-label="Open menu" class="p-2 rounded-md glass">
+            <!-- <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg> -->
+          </button>
+        </div>
+      </div>
+
+      <!-- mobile nav -->
+      <div id="mobileNav" class="md:hidden max-w-6xl mx-auto px-5 pb-4 hidden">
+        <div class="flex flex-col gap-3 mt-3">
+          <a href="#about" class="py-2 px-3 rounded-lg glass">About</a>
+          <a href="#skills" class="py-2 px-3 rounded-lg glass">Skills</a>
+          <a href="#projects" class="py-2 px-3 rounded-lg glass">Projects</a>
+          <a href="#experience" class="py-2 px-3 rounded-lg glass">Experience</a>
+          <a href="#contact" class="py-2 px-3 rounded-lg glass">Contact</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <main class="flex-1">
+      <section id="home" class="max-w-6xl mx-auto px-5 py-16 lg:py-28 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div class="space-y-6">
+          <p class="uppercase text-sm tracking-wide text-slate-400">Hello, I'm</p>
+          <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight">Aman Chaurasia
+            <span class="block text-2xl sm:text-3xl font-medium text-slate-300 mt-2">Data Scientist · Data Analyst · Cloud Engineer</span>
+          </h1>
+
+          <p class="text-slate-300 max-w-xl">I solve real-world problems with data — building predictive models, dashboards, and cloud-native data pipelines. I convert messy data into clear insights and production-ready solutions that drive business value.</p>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <a href="#projects" class="inline-flex items-center gap-3 px-5 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 shadow-lg text-sm font-semibold">See Projects</a>
+            <a href="/resume.pdf" download class="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 text-sm">Download Resume</a>
+            <a href="#contact" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl glass text-sm">Get in touch</a>
+          </div>
+
+          <div class="pt-6">
+            <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6">
+              <div class="text-center">
+                <div class="text-xs text-slate-400">Python</div>
+                <div class="font-semibold">Pandas · NumPy · sklearn</div>
+              </div>
+              <div class="text-center">
+                <div class="text-xs text-slate-400">SQL</div>
+                <div class="font-semibold">MySQL</div>
+              </div>
+              <div class="text-center">
+                <div class="text-xs text-slate-400">ML</div>
+                <div class="font-semibold">PyTorch</div>
+              </div>
+              <div class="text-center">
+                <div class="text-xs text-slate-400">Cloud</div>
+                <div class="font-semibold">AWS · Docker</div>
+              </div>
+              <div class="text-center">
+                <div class="text-xs text-slate-400">Viz Tools</div>
+                <div class="font-semibold">Tableau · PowerBI</div>
+              </div>
+              <div class="text-center">
+                <div class="text-xs text-slate-400">Infra</div>
+                <div class="font-semibold">Terraform · Kubernetes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- hero right card -->
+        <div class="relative">
+          <div class="glass rounded-2xl p-6 shadow-2xl">
+            <div class="flex items-center gap-4">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=60" alt="avatar" class="w-20 h-20 rounded-lg object-cover border-2 border-white/10">
+              <div>
+                <div class="text-lg font-semibold">Aman Chaurasia</div>
+                <div class="text-sm text-slate-400">Data Scientist | ML Engineer</div>
+              </div>
+            </div>
+
+            <div class="mt-5 space-y-4">
+              <div class="flex items-center justify-between text-sm">
+                <div>
+                  <div class="text-slate-400 text-xs">Projects experience</div>
+                  <div class="font-bold text-2xl">12+</div>
+                </div>
+                <div>
+                  <div class="text-slate-400 text-xs">Experience</div>
+                  <div class="font-bold text-2xl">0+ yrs</div>
+                </div>
+                <div>
+                  <div class="text-slate-400 text-xs">Certs</div>
+                  <div class="font-bold text-2xl">5</div>
+                </div>
+              </div>
+
+              <div class="pt-2">
+                <div class="text-slate-400 text-xs">Summary</div>
+                <p class="text-sm">Built end-to-end ML pipelines, deployed models to AWS, automated ETL, and created dashboards used by product and analytics teams.</p>
+              </div>
+
+              <div class="pt-3 flex gap-3">
+                <a href="#projects" class="flex-1 text-center py-2 rounded-md bg-white/5">View Work</a>
+                <a href="#contact" class="flex-1 text-center py-2 rounded-md accent-gradient">Hire Me</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- floating badges -->
+          <div class="absolute -left-6 -bottom-6 p-3 rounded-full glass shadow-lg">
+            <div class="text-xs">Top skills</div>
+            <div class="font-bold">ML · SQL · AWS</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="max-w-6xl mx-auto px-5 py-12">
+        <div class="grid md:grid-cols-3 gap-8 items-start">
+          <div class="md:col-span-2">
+            <h2 class="text-2xl font-bold">About me</h2>
+            <p class="text-slate-300 mt-4">I help businesses answer their most important questions using data. I specialise in building predictive models, robust data pipelines, and intuitive dashboards. I enjoy turning complex datasets into actionable insights and shipping maintainable production systems on the cloud.</p>
+
+            <div class="mt-6 grid sm:grid-cols-2 gap-4">
+              <div class="p-4 glass rounded-lg">
+                <h4 class="font-semibold">What I do</h4>
+                <ul class="mt-2 text-sm text-slate-300 list-disc list-inside space-y-1">
+                  <li>Data cleaning and feature engineering at scale</li>
+                  <li>Supervised & unsupervised ML models</li>
+                  <li>Model deployment and monitoring</li>
+                </ul>
+              </div>
+              <div class="p-4 glass rounded-lg">
+                <h4 class="font-semibold">Tools & workflows</h4>
+                <ul class="mt-2 text-sm text-slate-300 list-disc list-inside space-y-1">
+                  <li>Python, pandas, scikit-learn, PyTorch</li>
+                  <li>AWS (S3, Lambda, SageMaker), GCP</li>
+                  <li>SQL, Docker, Terraform</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mt-6 flex gap-3">
+              <a href="#projects" class="px-4 py-2 rounded-md bg-indigo-600">Selected projects</a>
+              <a href="#contact" class="px-4 py-2 rounded-md glass">Work with me</a>
+            </div>
+          </div>
+
+          <aside class="p-4 glass rounded-lg">
+            <h4 class="font-semibold">Quick facts</h4>
+            <ul class="mt-3 text-sm text-slate-300 space-y-2">
+              <li><strong>Location:</strong> India</li>
+              <li><strong>Availability:</strong> Open for roles & freelance</li>
+              <li><strong>Languages:</strong> English, Hindi</li>
+              <li><strong>Email:</strong> <a href="mailto:chaurasiaaman709@gmail.com" class="underline">chaurasiaaman709@gmail.com</a></li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section id="skills" class="max-w-6xl mx-auto px-5 py-12">
+        <h2 class="text-2xl font-bold">Skills & proficiency</h2>
+        <p class="text-slate-400 mt-2">A snapshot of my technical skills and how I use them in production.</p>
+
+        <div class="mt-6 grid sm:grid-cols-2 gap-6">
+          <div class="p-6 glass rounded-lg">
+            <h4 class="font-semibold">Data & ML</h4>
+            <div class="mt-4 space-y-4">
+              <!-- skill bar -->
+              <div>
+                <div class="flex justify-between text-xs text-slate-400"><span>Python</span><span>95%</span></div>
+                <div class="w-full h-2 bg-white/5 rounded mt-2 overflow-hidden"><div class="h-2 rounded" style="width:95%;background:linear-gradient(90deg,#7c3aed,#06b6d4)"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs text-slate-400"><span>Machine Learning</span><span>88%</span></div>
+                <div class="w-full h-2 bg-white/5 rounded mt-2 overflow-hidden"><div class="h-2 rounded" style="width:88%;background:linear-gradient(90deg,#7c3aed,#06b6d4)"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs text-slate-400"><span>SQL & Data Modeling</span><span>92%</span></div>
+                <div class="w-full h-2 bg-white/5 rounded mt-2 overflow-hidden"><div class="h-2 rounded" style="width:92%;background:linear-gradient(90deg,#7c3aed,#06b6d4)"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 glass rounded-lg">
+            <h4 class="font-semibold">Cloud & Infra</h4>
+            <div class="mt-4 space-y-4">
+              <div>
+                <div class="flex justify-between text-xs text-slate-400"><span>AWS</span><span>85%</span></div>
+                <div class="w-full h-2 bg-white/5 rounded mt-2 overflow-hidden"><div class="h-2 rounded" style="width:85%;background:linear-gradient(90deg,#7c3aed,#06b6d4)"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs text-slate-400"><span>Docker & CI/CD</span><span>80%</span></div>
+                <div class="w-full h-2 bg-white/5 rounded mt-2 overflow-hidden"><div class="h-2 rounded" style="width:80%;background:linear-gradient(90deg,#7c3aed,#06b6d4)"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs text-slate-400"><span>Terraform</span><span>72%</span></div>
+                <div class="w-full h-2 bg-white/5 rounded mt-2 overflow-hidden"><div class="h-2 rounded" style="width:72%;background:linear-gradient(90deg,#7c3aed,#06b6d4)"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section id="projects" class="max-w-6xl mx-auto px-5 py-12">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-2xl font-bold">Selected projects</h2>
+            <p class="text-slate-400">A collection of data, ML and cloud projects with production-ready components.</p>
+          </div>
+          <div class="flex gap-2 items-center">
+            <button data-filter="all" class="filterBtn px-3 py-2 rounded-md glass">All</button>
+            <button data-filter="ml" class="filterBtn px-3 py-2 rounded-md glass">ML</button>
+            <button data-filter="viz" class="filterBtn px-3 py-2 rounded-md glass">Viz</button>
+            <button data-filter="cloud" class="filterBtn px-3 py-2 rounded-md glass">Cloud</button>
+          </div>
+        </div>
+
+        <div id="projectsGrid" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- Project 1 -->
+          <article class="project-card p-4 rounded-xl glass" data-tags="ml cloud">
+            <div class="ratio-16-9">
+              <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=60" alt="project-1">
+            </div>
+            <h3 class="mt-4 font-semibold">Customer Churn Prediction</h3>
+            <p class="text-slate-300 mt-2 text-sm">Built an end-to-end churn prediction pipeline: feature store, imbalance handling, XGBoost model, deployed with AWS Lambda + API Gateway.</p>
+            <div class="mt-4 flex items-center gap-2">
+              <span class="text-xs text-slate-400">ML</span>
+              <span class="text-xs text-slate-400">AWS</span>
+              <button class="ml-auto viewBtn px-3 py-2 rounded-md bg-indigo-600 text-sm">View</button>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-card p-4 rounded-xl glass" data-tags="viz">
+            <div class="ratio-16-9">
+              <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=60" alt="project-2">
+            </div>
+            <h3 class="mt-4 font-semibold">Interactive Sales Dashboard</h3>
+            <p class="text-slate-300 mt-2 text-sm">Built interactive dashboards in Tableau and embedded dynamic SQL queries for drill-down analytics used by stakeholders.</p>
+            <div class="mt-4 flex items-center gap-2">
+              <span class="text-xs text-slate-400">Tableau</span>
+              <span class="text-xs text-slate-400">SQL</span>
+              <button class="ml-auto viewBtn px-3 py-2 rounded-md bg-indigo-600 text-sm">View</button>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project-card p-4 rounded-xl glass" data-tags="cloud">
+            <div class="ratio-16-9">
+              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=60" alt="project-3">
+            </div>
+            <h3 class="mt-4 font-semibold">Data Pipeline on AWS</h3>
+            <p class="text-slate-300 mt-2 text-sm">Serverless ETL using S3, Glue, and Redshift with Airflow orchestration; automated data validation and lineage tracking.</p>
+            <div class="mt-4 flex items-center gap-2">
+              <span class="text-xs text-slate-400">AWS</span>
+              <span class="text-xs text-slate-400">Airflow</span>
+              <button class="ml-auto viewBtn px-3 py-2 rounded-md bg-indigo-600 text-sm">View</button>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="project-card p-4 rounded-xl glass" data-tags="ml viz">
+            <div class="ratio-16-9">
+              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=60" alt="project-4">
+            </div>
+            <h3 class="mt-4 font-semibold">Fraud Detection System</h3>
+            <p class="text-slate-300 mt-2 text-sm">Real-time scoring with feature store, streaming features, LightGBM model and monitoring using Prometheus + Grafana.</p>
+            <div class="mt-4 flex items-center gap-2">
+              <span class="text-xs text-slate-400">Streaming</span>
+              <span class="text-xs text-slate-400">Monitoring</span>
+              <button class="ml-auto viewBtn px-3 py-2 rounded-md bg-indigo-600 text-sm">View</button>
+            </div>
+          </article>
+
+          <!-- Project 5 -->
+          <article class="project-card p-4 rounded-xl glass" data-tags="viz cloud">
+            <div class="ratio-16-9">
+              <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=60" alt="project-5">
+            </div>
+            <h3 class="mt-4 font-semibold">Ad-hoc Analytics Toolkit</h3>
+            <p class="text-slate-300 mt-2 text-sm">Reusable SQL macros and a notebook library to speed up exploratory analysis and A/B testing, packaged and versioned in Docker.</p>
+            <div class="mt-4 flex items-center gap-2">
+              <span class="text-xs text-slate-400">SQL</span>
+              <span class="text-xs text-slate-400">Docker</span>
+              <button class="ml-auto viewBtn px-3 py-2 rounded-md bg-indigo-600 text-sm">View</button>
+            </div>
+          </article>
+
+          <!-- Project 6 -->
+          <article class="project-card p-4 rounded-xl glass" data-tags="ml">
+            <div class="ratio-16-9">
+              <img src="https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1200&q=60" alt="project-6">
+            </div>
+            <h3 class="mt-4 font-semibold">Time Series Forecasting</h3>
+            <p class="text-slate-300 mt-2 text-sm">Demand forecasting using Prophet & LSTM ensembles with model explainability using SHAP and automated retraining schedulers.</p>
+            <div class="mt-4 flex items-center gap-2">
+              <span class="text-xs text-slate-400">Time series</span>
+              <span class="text-xs text-slate-400">MLOps</span>
+              <button class="ml-auto viewBtn px-3 py-2 rounded-md bg-indigo-600 text-sm">View</button>
+            </div>
+          </article>
+
+        </div>
+
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience" class="max-w-6xl mx-auto px-5 py-12">
+        <h2 class="text-2xl font-bold">Experience & Education</h2>
+        <div class="mt-6 grid md:grid-cols-2 gap-6">
+          <div class="p-4 glass rounded-lg">
+            <h4 class="font-semibold">Experience</h4>
+            <ol class="mt-4 space-y-4 text-sm text-slate-300">
+              <li>
+                <div class="flex justify-between"><div><strong>Data Scientist</strong> — Startup (Remote)</div><div class="text-slate-400">2023 — Present</div></div>
+                <div class="text-slate-400 mt-1">Built ML pipelines, model-serving, and dashboards for retention analytics.</div>
+              </li>
+              <li>
+                <div class="flex justify-between"><div><strong>Data Analyst</strong> — Company</div><div class="text-slate-400">2021 — 2023</div></div>
+                <div class="text-slate-400 mt-1">Designed ETL workflows and automated reporting for business units.</div>
+              </li>
+            </ol>
+          </div>
+
+          <div class="p-4 glass rounded-lg">
+            <h4 class="font-semibold">Education & Certs</h4>
+            <ul class="mt-4 text-sm text-slate-300 space-y-3">
+              <li><strong>B.Tech</strong> — Computer Science</li>
+              <li><strong>Certs:</strong> AWS Certified Data Analytics, Google Data Analytics, Coursera ML</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="max-w-6xl mx-auto px-5 py-12">
+        <h2 class="text-2xl font-bold">Contact</h2>
+        <p class="text-slate-400 mt-2">Want to collaborate or hire? Send a quick message or email me directly.</p>
+
+        <div class="mt-6 grid md:grid-cols-3 gap-6">
+          <div class="md:col-span-2 p-6 glass rounded-lg">
+            <form id="contactForm" class="space-y-4">
+              <div class="grid sm:grid-cols-2 gap-4">
+                <input required name="name" placeholder="Your name" class="p-3 rounded-lg bg-transparent border border-white/5" />
+                <input required name="email" type="email" placeholder="Email" class="p-3 rounded-lg bg-transparent border border-white/5" />
+              </div>
+              <input name="subject" placeholder="Subject" class="p-3 rounded-lg bg-transparent border border-white/5 w-full" />
+              <textarea name="message" required rows="5" placeholder="Message" class="p-3 rounded-lg bg-transparent border border-white/5 w-full"></textarea>
+
+              <div class="flex items-center gap-3">
+                <button type="submit" class="px-4 py-2 rounded-md bg-indigo-600">Send message</button>
+                <a href="mailto:chaurasiaaman709@gmail.com" class="px-4 py-2 rounded-md glass">Email me</a>
+              </div>
+
+              <p id="formMsg" class="text-sm text-emerald-400 hidden"></p>
+            </form>
+          </div>
+
+          <aside class="p-6 glass rounded-lg">
+            <h4 class="font-semibold">Reach out</h4>
+            <p class="text-slate-300 mt-3 text-sm">Email: <a href="mailto:chaurasiaaman709@gmail.com" class="underline">chaurasiaaman709@gmail.com</a></p>
+            <p class="text-slate-300 mt-2 text-sm">LinkedIn: <a href="#" class="underline">linkedin.com/in/yourprofile</a></p>
+            <p class="text-slate-300 mt-2 text-sm">GitHub: <a href="#" class="underline">github.com/yourusername</a></p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="border-t border-white/5 mt-12">
+        <div class="max-w-6xl mx-auto px-5 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="text-sm">© <span id="year"></span> Aman Chaurasia — Built with ❤️ for data.</div>
+          <div class="flex gap-3 items-center">
+            <a href="#" aria-label="github" class="p-2 glass rounded-md">GH</a>
+            <a href="#" aria-label="linkedin" class="p-2 glass rounded-md">LI</a>
+            <a href="#" aria-label="twitter" class="p-2 glass rounded-md">TW</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- PROJECT MODAL -->
+  <div id="projectModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <div class="absolute inset-0 bg-black/60" id="modalBackdrop"></div>
+    <div class="relative max-w-3xl w-full p-6 rounded-xl glass z-50">
+      <button id="closeModal" class="absolute top-4 right-4 p-2 rounded-md">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    // basic interactivity
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    menuBtn.addEventListener('click', ()=>{ mobileNav.classList.toggle('hidden'); });
+
+    // project filter
+    const filterBtns = document.querySelectorAll('.filterBtn');
+    const projectCards = document.querySelectorAll('.project-card');
+    filterBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const f = btn.dataset.filter;
+        filterBtns.forEach(b=>b.classList.remove('ring','ring-indigo-500'));
+        btn.classList.add('ring','ring-indigo-500');
+        projectCards.forEach(card=>{
+          if(f==='all') card.style.display = '';
+          else {
+            const tags = card.dataset.tags.split(' ');
+            card.style.display = tags.includes(f) ? '' : 'none';
+          }
+        })
+      })
+    });
+
+    // view project modal (simple example: populate with card content)
+    const viewBtns = document.querySelectorAll('.viewBtn');
+    const modal = document.getElementById('projectModal');
+    const modalContent = document.getElementById('modalContent');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const closeModal = document.getElementById('closeModal');
+
+    viewBtns.forEach((btn)=>{
+      btn.addEventListener('click', (e)=>{
+        const card = e.target.closest('.project-card');
+        const title = card.querySelector('h3').textContent;
+        const desc = card.querySelector('p').textContent;
+        const img = card.querySelector('img').src;
+        modalContent.innerHTML = `
+          <div class=\"grid md:grid-cols-2 gap-6\">\n            <img src=\"${img}\" class=\"w-full h-64 object-cover rounded-lg\" />\n            <div>\n              <h3 class=\"text-xl font-bold\">${title}</h3>\n              <p class=\"text-slate-300 mt-3\">${desc}</p>\n              <ul class=\"mt-4 text-sm text-slate-300\">\n                <li><strong>Role:</strong> Model building, deployment</li>\n                <li><strong>Tech:</strong> Python, AWS, XGBoost</li>\n                <li><strong>Impact:</strong> Reduced churn by 12% on pilot.</li>\n              </ul>\n              <div class=\"mt-4\">\n                <a href=\"#\" class=\"px-4 py-2 rounded-md bg-indigo-600\">Open repo</a>\n                <a href=\"#\" class=\"ml-2 px-4 py-2 rounded-md glass\">Read case study</a>\n              </div>\n            </div>\n          </div>`;
+        modal.classList.remove('hidden');
+        gsap.fromTo('#projectModal .relative',{autoAlpha:0,y:30},{autoAlpha:1,y:0,duration:0.45});
+      })
+    });
+
+    closeModal.addEventListener('click', ()=> modal.classList.add('hidden'));
+    modalBackdrop.addEventListener('click', ()=> modal.classList.add('hidden'));
+
+    // simple contact form (client-side only) -> opens mailto with prefilled content
+    const contactForm = document.getElementById('contactForm');
+    const formMsg = document.getElementById('formMsg');
+    contactForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const form = new FormData(contactForm);
+      const name = form.get('name');
+      const email = form.get('email');
+      const subject = form.get('subject') || 'Inquiry from portfolio';
+      const message = encodeURIComponent(`Name: ${name}%0AEmail: ${email}%0A%0A${form.get('message')}`);
+      const mail = `mailto:chaurasiaaman709@gmail.com?subject=${encodeURIComponent(subject)}&body=${message}`;
+      window.location.href = mail;
+      formMsg.textContent = 'Opening your email client...';
+      formMsg.classList.remove('hidden');
+      setTimeout(()=>{ formMsg.classList.add('hidden'); }, 3500);
+    });
+
+    // subtle GSAP intro
+    gsap.from('header', {y:-20, autoAlpha:0, duration:0.6});
+    gsap.from('#home h1', {y:20, autoAlpha:0, duration:0.8, delay:0.1});
+    gsap.from('.project-card', {y:20, autoAlpha:0, duration:0.7, stagger:0.08, delay:0.2});
+
+    // small accessibility helper: focus outlines when tabbing
+    document.body.addEventListener('keydown', (e)=>{
+      if(e.key === 'Tab') document.documentElement.classList.add('user-is-tabbing');
+    });
+  </script>
+</body>
+</html>
