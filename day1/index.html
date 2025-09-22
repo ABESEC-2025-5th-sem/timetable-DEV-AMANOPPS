@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Timetable — Static</title>
+  <style>
+    :root{--accent:#2563eb;--bg:#0f172a;--card:#0b1220;--muted:#94a3b8}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans",sans-serif;margin:0;background:linear-gradient(180deg,#07102a 0%,#071a2f 100%);color:#e6eef8;min-height:100vh;display:flex;flex-direction:column}
+    header{padding:20px 24px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+    h1{margin:0;font-size:20px}
+    .controls{display:flex;gap:8px;align-items:center}
+    button{background:var(--accent);border:none;padding:8px 12px;border-radius:8px;color:white;cursor:pointer;font-weight:600}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-weight:600}
+    main{padding:16px}
+    .timetable-wrap{overflow:auto;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px}
+    table{border-collapse:collapse;width:100%;min-width:900px}
+    thead th{position:sticky;top:0;background:rgba(10,14,24,0.7);backdrop-filter:blur(6px);padding:12px 10px;text-align:left;font-size:13px;color:var(--muted)}
+    tbody td{border:1px solid rgba(255,255,255,0.03);padding:8px;height:72px;vertical-align:top}
+    .slot{display:flex;flex-direction:column;gap:6px}
+    .event{padding:6px 8px;border-radius:8px;color:#041025;font-weight:700;cursor:pointer}
+    .meta{font-size:12px;color:var(--muted);margin-top:6px}
+    .small{font-size:13px;color:var(--muted)}
+    .grid-times{width:140px}
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:16px}
+    .modal{background:linear-gradient(180deg,#07132a,#071a2f);padding:16px;border-radius:12px;min-width:320px;max-width:520px;width:100%;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+    label{display:block;font-size:13px;margin-top:8px;color:var(--muted)}
+    input[type=text],select{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+    .row{display:flex;gap:8px}
+    .row .col{flex:1}
+    footer{padding:12px 24px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between}
+    @media(max-width:700px){thead th{font-size:12px} .grid-times{width:110px} table{min-width:700px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Timetable — Static (HTML/CSS/JS)</h1>
+      <div class="small">Click any cell to add/edit an event. Data is stored locally (localStorage).</div>
+    </div>
+    <div class="controls">
+      <button id="addQuick">+ Quick Add</button>
+      <button id="exportBtn" class="ghost">Export JSON</button>
+      <button id="importBtn" class="ghost">Import JSON</button>
+      <button id="clearBtn" class="ghost">Clear</button>
+    </div>
+  </header>
+  <main>
+    <div class="timetable-wrap">
+      <table id="timetable">
+        <thead>
+          <tr>
+            <th class="grid-times">Time</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+          </tr>
+        </thead>
+        <tbody id="body">
+          <!-- rows inserted by JS -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <div class="modal-backdrop" id="modal">
+    <div class="modal">
+      <h3 id="modalTitle">Add Event</h3>
+      <div class="small meta" id="cellInfo"></div>
+      <label>Subject</label>
+      <input id="subject" type="text" placeholder="e.g. Data Structures" />
+      <label>Location / Room</label>
+      <input id="location" type="text" placeholder="e.g. Lab 3" />
+      <div class="row">
+        <div class="col">
+          <label>Color</label>
+          <select id="color">
+            <option value="#f97316">Orange</option>
+            <option value="#60a5fa">Blue</option>
+            <option value="#34d399">Green</option>
+            <option value="#fb7185">Pink</option>
+            <option value="#a78bfa">Purple</option>
+          </select>
+        </div>
+        <div class="col">
+          <label>Duration (hours)</label>
+          <select id="duration">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+        <button id="deleteBtn" class="ghost">Delete</button>
+        <button id="saveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>Tip: open on desktop for best view. Mobile users can scroll horizontally.</div>
+    <div>Made with ❤️ — static site</div>
+  </footer>
+
+  <script>
+    // Basic timetable generator and localStorage persistence
+    const times = ["8:00","9:00","10:00","11:00","12:00","1:00","2:00","3:00","4:00","5:00"]
+    const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+    const body = document.getElementById('body')
+    const modal = document.getElementById('modal')
+    const subjectEl = document.getElementById('subject')
+    const locationEl = document.getElementById('location')
+    const colorEl = document.getElementById('color')
+    const durationEl = document.getElementById('duration')
+    const modalTitle = document.getElementById('modalTitle')
+    const cellInfo = document.getElementById('cellInfo')
+    const deleteBtn = document.getElementById('deleteBtn')
+    let currentCell = null
+
+    function makeId(r,c){return `r${r}c${c}`}
+
+    function loadData(){
+      try{const raw=localStorage.getItem('timetable_v1');return raw?JSON.parse(raw):{}}catch(e){return {}}
+    }
+    function saveData(data){localStorage.setItem('timetable_v1',JSON.stringify(data))}
+
+    let data = loadData()
+
+    function render(){
+      body.innerHTML=''
+      times.forEach((t,r)=>{
+        const tr = document.createElement('tr')
+        const th = document.createElement('th')
+        th.textContent = t
+        th.style.padding='10px'
+        tr.appendChild(th)
+        for(let c=0;c<days.length;c++){
+          const td = document.createElement('td')
+          td.dataset.row=r;td.dataset.col=c
+          const slot = document.createElement('div');slot.className='slot'
+          const id = makeId(r,c)
+          if(data[id]){
+            const ev = document.createElement('div')
+            ev.className='event'
+            ev.style.background=data[id].color
+            ev.textContent = data[id].subject
+            ev.title = data[id].subject + (data[id].location?(' — '+data[id].location):'')
+            slot.appendChild(ev)
+            const meta = document.createElement('div');meta.className='meta'
+            meta.textContent = data[id].location || ''
+            slot.appendChild(meta)
+          }
+          td.appendChild(slot)
+          td.addEventListener('click', ()=>openModal(r,c))
+          tr.appendChild(td)
+        }
+        body.appendChild(tr)
+      })
+    }
+
+    function openModal(r,c){
+      currentCell = {r,c}
+      const id = makeId(r,c)
+      modalTitle.textContent = 'Edit / Add Event'
+      cellInfo.textContent = `${days[c]} — ${times[r]}`
+      const ev = data[id]
+      subjectEl.value = ev?ev.subject:''
+      locationEl.value = ev?ev.location:''
+      colorEl.value = ev?ev.color:'#f97316'
+      durationEl.value = ev?ev.duration||1:1
+      deleteBtn.style.display = ev? 'inline-block':'none'
+      modal.style.display = 'flex'
+    }
+
+    document.getElementById('saveBtn').addEventListener('click', ()=>{
+      const {r,c} = currentCell
+      const id = makeId(r,c)
+      const subj = subjectEl.value.trim()
+      if(!subj){alert('Please enter subject');return}
+      data[id] = {subject:subj,location:locationEl.value.trim(),color:colorEl.value,duration:parseInt(durationEl.value)}
+      saveData(data)
+      modal.style.display = 'none'
+      render()
+    })
+
+    deleteBtn.addEventListener('click', ()=>{
+      const {r,c} = currentCell
+      const id = makeId(r,c)
+      if(data[id]){delete data[id];saveData(data)}
+      modal.style.display = 'none'
+      render()
+    })
+
+    modal.addEventListener('click', (e)=>{if(e.target===modal)modal.style.display='none'})
+
+    // Controls
+    document.getElementById('clearBtn').addEventListener('click', ()=>{
+      if(confirm('Clear all saved timetable?')){data={};saveData(data);render()}
+    })
+    document.getElementById('exportBtn').addEventListener('click', ()=>{
+      const blob = new Blob([JSON.stringify(data, null, 2) ], {type:'application/json'})
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a');a.href=url;a.download='timetable.json';a.click();URL.revokeObjectURL(url)
+    })
+    document.getElementById('importBtn').addEventListener('click', ()=>{
+      const inp = document.createElement('input');inp.type='file';inp.accept='application/json'
+      inp.onchange = ()=>{
+        const f = inp.files[0]; if(!f) return; const r = new FileReader(); r.onload = ()=>{ try{data=JSON.parse(r.result);saveData(data);render();alert('Imported');}catch(e){alert('Invalid file') }}; r.readAsText(f)
+      }
+      inp.click()
+    })
+
+    document.getElementById('addQuick').addEventListener('click', ()=>{
+      // quick adds at first empty cell
+      for(let r=0;r<times.length;r++){
+        for(let c=0;c<days.length;c++){
+          const id = makeId(r,c); if(!data[id]){data[id]={subject:'New Class',location:'',color:'#60a5fa',duration:1};saveData(data);render();return}
+        }
+      }
+      alert('No empty cells')
+    })
+
+    // initial render
+    render()
+  </script>
+</body>
+</html>
