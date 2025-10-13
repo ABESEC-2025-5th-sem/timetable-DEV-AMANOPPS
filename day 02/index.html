@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Personal Details Form</title>
+</head>
+<body>
+  <h2>Personal Details Form</h2>
+  <form>
+
+    Full Name: <input type="text" name="fullname" required><br><br>
+    Date of Birth: <input type="date" name="dob" required><br><br>
+    Gender: 
+    <select name="gender" required>
+      <option value="">--Select--</option>
+      <option>Male</option>
+      <option>Female</option>
+      <option>Other</option>
+    </select><br><br>
+    Email: <input type="email" name="email" required><br><br>
+    Phone: <input type="tel" name="phone" required><br><br>
+    Address: <textarea name="address"></textarea><br><br>
+
+
+    Highest Education: 
+    <select name="education">
+      <option value="">--Select--</option>
+      <option>High School</option>
+      <option>Bachelor's</option>
+      <option>Master's</option>
+      <option>PhD</option>
+    </select><br><br>
+    Skills: <input type="text" name="skills"><br><br>
+    Work Experience: <textarea name="experience"></textarea><br><br>
+
+    Upload Resume: <input type="file" name="resume"><br><br>
+
+    <!-- Submit -->
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
