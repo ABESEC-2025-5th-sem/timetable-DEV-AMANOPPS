@@ -1,42 +1,41 @@
-import React, { useState, useEffect } from "react";
-import "./ImageSlider.css";
-
-const images = [
-  "https://m.media-amazon.com/images/I/61DUO0NqyyL._SX3000_.jpg",
-  "https://m.media-amazon.com/images/I/71qid7QFWJL._SX3000_.jpg",
-  "https://m.media-amazon.com/images/I/71aVYw+Xl-L._SX3000_.jpg",
-  "https://m.media-amazon.com/images/I/61TD5JLGhIL._SX3000_.jpg",
-];
+import React, { useState } from "react";
+import "./ImageSlider.css"; // optional for styling
 
 const ImageSlider = () => {
-  const [index, setIndex] = useState(0);
+  // your image URLs
+  const images = [
+    "https://images.unsplash.com/photo-1581291519195-ef11498d1cf5",
+    "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d",
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"
+  ];
 
-  // Auto-slide every 3 seconds
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
+  // track which image is active
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // go to next image
+  const nextImage = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  // go to previous image
+  const prevImage = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
 
   return (
-    <div className="slider">
-      {images.map((img, i) => (
-        <div
-          key={i}
-          className={`slide ${i === index ? "active" : ""}`}
-          style={{ backgroundImage: `url(${img})` }}
-        ></div>
-      ))}
-      <div className="dots">
-        {images.map((_, i) => (
-          <span
-            key={i}
-            className={i === index ? "dot active" : "dot"}
-            onClick={() => setIndex(i)}
-          ></span>
-        ))}
-      </div>
+    <div className="slider-container">
+      <button onClick={prevImage} className="slider-btn">−</button>
+      <img
+        src={images[currentIndex]}
+        alt="slider"
+        className="slider-image"
+      />
+      <button onClick={nextImage} className="slider-btn">+</button>
     </div>
   );
 };
