@@ -3,6 +3,8 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Checkout from "./components/Checkout";
 import "./App.css";
+import ImageSlider from "./components/ImageSlider";
+
 
 function App() {
   const [cart, setCart] = useState([]);
