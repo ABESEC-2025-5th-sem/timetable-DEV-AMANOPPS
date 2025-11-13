@@ -1,0 +1,52 @@
+:root{
+  --bg:#baad39;
+  --card:#3ec669;
+  --muted:#1d2b49;
+  --accent:#0c3792;
+  --danger:#ef4444;
+}
+
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#111;}
+
+.app-root{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px}
+.container{width:100%;max-width:800px;background:var(--card);border-radius:12px;padding:20px;box-shadow:0 6px 30px rgba(12,17,30,0.08);}
+
+.title{margin:0 0 12px 0;font-size:26px;text-align:center}
+
+.add-todo{display:flex;gap:8px;margin-bottom:12px}
+.add-todo input{padding:10px;border:1px solid #e5e7eb;border-radius:8px;flex:1}
+.add-btn{background:var(--accent);color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
+
+.controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.controls .left{display:flex;gap:12px;align-items:center}
+.filters button{margin-right:6px;padding:6px 10px;border-radius:6px;border:1px solid transparent;background:transparent;cursor:pointer}
+.filters button.active{background:#eef2ff;border-color:var(--accent);color:var(--accent)}
+.search input{padding:8px 10px;border-radius:8px;border:1px solid #e5e7eb}
+
+.right select{padding:6px;border-radius:6px}
+.danger{background:transparent;border:1px solid var(--danger);color:var(--danger);padding:6px 8px;border-radius:6px;cursor:pointer}
+
+.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+
+.todo-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.todo-item{display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:10px;border:1px solid #f1f5f9;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0));transition:transform 120ms ease,box-shadow 120ms ease}
+.todo-item:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(12,17,30,0.06)}
+.todo-item .left{display:flex;align-items:center;gap:12px}
+.todo-item .text{cursor:text}
+.todo-item .title{font-weight:600}
+.todo-item .desc{font-size:13px;color:var(--muted)}
+.todo-item.completed .title{text-decoration:line-through;color:var(--muted)}
+.actions button{background:transparent;border:none;cursor:pointer;margin-left:6px;font-size:18px}
+.actions .del{color:var(--danger)}
+
+.empty{padding:18px;color:var(--muted);text-align:center}
+
+.footer{text-align:center;color:var(--muted);margin-top:12px;font-size:13px}
+
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center}
+.modal{background:var(--card);padding:18px;border-radius:10px;min-width:320px;box-shadow:0 10px 40px rgba(2,6,23,0.2)}
+.modal h3{margin:0 0 8px 0}
+.modal input{width:100%;padding:8px;margin-bottom:8px;border-radius:8px;border:1px solid #e5e7eb}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px}
+.modal-actions button{padding:8px 10px;border-radius:8px;border:1px solid #e5e7eb;background:transparent;cursor:pointer}
