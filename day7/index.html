@@ -1,89 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Advanced Age Calculator</title>
+  <meta charset="UTF-8" />
+  <title>Age Calculator - Lovable Style</title>
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
     body {
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      margin: 0;
+      padding: 0;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 0;
+      font-family: "Inter", sans-serif;
+      background: linear-gradient(135deg, #f5d7ff, #d4e1ff, #ffe7d1);
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .container {
-      background: white;
-      padding: 35px 40px;
-      border-radius: 20px;
       width: 380px;
+      padding: 35px 40px;
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.15);
       text-align: center;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-      animation: fadeIn 0.7s ease-in-out;
+      animation: fadeIn 0.8s ease-in-out;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     h2 {
       margin-bottom: 10px;
-      color: #333;
+      font-weight: 600;
+      color: #2b2b2b;
+      font-size: 26px;
     }
 
-    input {
-      padding: 12px;
-      width: 100%;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      margin-bottom: 15px;
+    p {
+      margin-top: 0;
+      color: #444;
       font-size: 15px;
     }
 
-    button {
+    input {
       width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      background-color: #2575fc;
+      padding: 14px;
+      margin-top: 15px;
+      border-radius: 12px;
+      font-size: 15px;
+      border: 1px solid #ddd;
+      outline: none;
+      background: rgba(255, 255, 255, 0.7);
+      transition: 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #7a5fff;
+      box-shadow: 0 0 10px rgba(122, 95, 255, 0.4);
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      background: #7a5fff;
       color: white;
+      border: none;
+      border-radius: 14px;
       font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
-      transition: 0.3s;
+      letter-spacing: 0.5px;
+      transition: 0.3s ease;
+      box-shadow: 0 5px 15px rgba(122, 95, 255, 0.4);
     }
 
     button:hover {
-      transform: scale(1.05);
-      background-color: #1a5ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(122, 95, 255, 0.5);
     }
 
     #result, #countdown {
-      margin-top: 18px;
+      margin-top: 20px;
       font-size: 17px;
       font-weight: 600;
-      color: #444;
-      line-height: 1.6;
+      color: #2d2d2d;
     }
-
   </style>
 </head>
 
 <body>
-
   <div class="container">
-    <h2>🎉 Age Calculator</h2>
-    <p>Select your Date of Birth:</p>
+    <h2>✨ Age Calculator</h2>
+    <p>Select your Date of Birth</p>
 
-    <input type="date" id="dob">
+    <input type="date" id="dob" />
 
     <button onclick="calculateAge()">Calculate Age</button>
 
-    <p id="result"></p>
-    <p id="countdown"></p>
+    <div id="result"></div>
+    <div id="countdown"></div>
   </div>
 
   <script>
@@ -91,7 +121,8 @@
       let dob = document.getElementById("dob").value;
 
       if (!dob) {
-        document.getElementById("result").innerHTML = "⚠️ Please select a valid date.";
+        document.getElementById("result").innerHTML =
+          "⚠️ Please select a valid date.";
         return;
       }
 
@@ -99,7 +130,8 @@
       let today = new Date();
 
       if (birthDate > today) {
-        document.getElementById("result").innerHTML = "⚠️ Birth date cannot be in the future.";
+        document.getElementById("result").innerHTML =
+          "⚠️ Birth date cannot be in the future.";
         return;
       }
 
@@ -119,12 +151,16 @@
       }
 
       document.getElementById("result").innerHTML =
-        `✅ Your Age: <br> <strong>${ageYears} Years</strong>, 
+        `🎉 <strong>${ageYears} Years</strong>, 
          <strong>${ageMonths} Months</strong>, 
-         <strong>${ageDays} Days</strong>`;
+         <strong>${ageDays} Days</strong> old`;
 
-      // 🎉 Next Birthday Countdown
-      let nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+      // Next Birthday Countdown
+      let nextBirthday = new Date(
+        today.getFullYear(),
+        birthDate.getMonth(),
+        birthDate.getDate()
+      );
       if (nextBirthday < today) {
         nextBirthday.setFullYear(today.getFullYear() + 1);
       }
@@ -133,7 +169,7 @@
       let daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
       document.getElementById("countdown").innerHTML =
-        `🎂 Your next birthday is in <strong>${daysLeft} days</strong> 🎉`;
+        `🎂 Your next birthday is in <strong>${daysLeft} days</strong>`;
     }
   </script>
 </body>
