@@ -2,84 +2,110 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Age Calculator</title>
+  <title>Advanced Age Calculator</title>
+
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      margin: 0;
     }
+
     .container {
       background: white;
-      padding: 20px 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      padding: 35px 40px;
+      border-radius: 20px;
+      width: 380px;
       text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+      animation: fadeIn 0.7s ease-in-out;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
     input {
-      padding: 10px;
-      width: 200px;
-      border-radius: 6px;
+      padding: 12px;
+      width: 100%;
+      border-radius: 10px;
       border: 1px solid #ccc;
       margin-bottom: 15px;
-      text-align: center;
+      font-size: 15px;
     }
+
     button {
-      padding: 10px 20px;
+      width: 100%;
+      padding: 12px;
       border: none;
-      border-radius: 6px;
-      background-color: #007BFF;
+      border-radius: 10px;
+      background-color: #2575fc;
       color: white;
+      font-size: 16px;
       cursor: pointer;
+      transition: 0.3s;
     }
+
     button:hover {
-      background-color: #0056b3;
+      transform: scale(1.05);
+      background-color: #1a5ed8;
     }
-    #result {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
+
+    #result, #countdown {
+      margin-top: 18px;
+      font-size: 17px;
+      font-weight: 600;
+      color: #444;
+      line-height: 1.6;
     }
+
   </style>
 </head>
+
 <body>
+
   <div class="container">
-    <h2>Age Calculator</h2>
-    <p>Enter your Date of Birth (DD/MM/YYYY):</p>
-    <input type="text" id="dob" placeholder="e.g. 15/08/2000">
-    <br>
-    <button onclick="calculateAge()">Check Age</button>
+    <h2>🎉 Age Calculator</h2>
+    <p>Select your Date of Birth:</p>
+
+    <input type="date" id="dob">
+
+    <button onclick="calculateAge()">Calculate Age</button>
+
     <p id="result"></p>
+    <p id="countdown"></p>
   </div>
 
   <script>
     function calculateAge() {
-      let dobInput = document.getElementById("dob").value;
-      let parts = dobInput.split("/");
+      let dob = document.getElementById("dob").value;
 
-      if (parts.length !== 3) {
-        document.getElementById("result").innerHTML = "⚠️ Please enter date in DD/MM/YYYY format.";
+      if (!dob) {
+        document.getElementById("result").innerHTML = "⚠️ Please select a valid date.";
         return;
       }
 
-      let day = parseInt(parts[0]);
-      let month = parseInt(parts[1]) - 1; // JS months are 0-based
-      let year = parseInt(parts[2]);
-
-      let dob = new Date(year, month, day);
+      let birthDate = new Date(dob);
       let today = new Date();
 
-      if (dob > today || isNaN(dob.getTime())) {
-        document.getElementById("result").innerHTML = "⚠️ Please enter a valid date.";
+      if (birthDate > today) {
+        document.getElementById("result").innerHTML = "⚠️ Birth date cannot be in the future.";
         return;
       }
 
-      let ageYears = today.getFullYear() - dob.getFullYear();
-      let ageMonths = today.getMonth() - dob.getMonth();
-      let ageDays = today.getDate() - dob.getDate();
+      let ageYears = today.getFullYear() - birthDate.getFullYear();
+      let ageMonths = today.getMonth() - birthDate.getMonth();
+      let ageDays = today.getDate() - birthDate.getDate();
 
       if (ageDays < 0) {
         ageMonths--;
@@ -92,8 +118,22 @@
         ageMonths += 12;
       }
 
-      document.getElementById("result").innerHTML = 
-        "✅ Your age is: " + ageYears + " years, " + ageMonths + " months, and " + ageDays + " days.";
+      document.getElementById("result").innerHTML =
+        `✅ Your Age: <br> <strong>${ageYears} Years</strong>, 
+         <strong>${ageMonths} Months</strong>, 
+         <strong>${ageDays} Days</strong>`;
+
+      // 🎉 Next Birthday Countdown
+      let nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+      if (nextBirthday < today) {
+        nextBirthday.setFullYear(today.getFullYear() + 1);
+      }
+
+      let diff = nextBirthday - today;
+      let daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+      document.getElementById("countdown").innerHTML =
+        `🎂 Your next birthday is in <strong>${daysLeft} days</strong> 🎉`;
     }
   </script>
 </body>
