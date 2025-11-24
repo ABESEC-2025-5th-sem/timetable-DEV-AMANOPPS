@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>Age Calculator - Lovable Style</title>
+  <title>Age Calculator - Premium Edition</title>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
@@ -18,40 +19,56 @@
       background: linear-gradient(135deg, #f5d7ff, #d4e1ff, #ffe7d1);
       background-size: 200% 200%;
       animation: gradientMove 8s ease infinite;
+      transition: 0.4s ease;
     }
 
+    /* Background Animation */
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
+    /* Glassmorphism Container */
     .container {
       width: 380px;
       padding: 35px 40px;
-      backdrop-filter: blur(20px);
-      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(25px);
+      background: rgba(255, 255, 255, 0.30);
       border-radius: 25px;
       border: 1px solid rgba(255, 255, 255, 0.45);
-      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 12px 45px rgba(0, 0, 0, 0.15);
       text-align: center;
       animation: fadeIn 0.8s ease-in-out;
+      position: relative;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Theme Toggle */
+    .theme-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
 
     h2 {
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       font-weight: 600;
       color: #2b2b2b;
       font-size: 26px;
     }
 
     p {
-      margin-top: 0;
       color: #444;
       font-size: 15px;
     }
@@ -73,8 +90,9 @@
       box-shadow: 0 0 10px rgba(122, 95, 255, 0.4);
     }
 
+    /* Button with Ripple Effect */
     button {
-      margin-top: 20px;
+      margin-top: 18px;
       width: 100%;
       padding: 14px;
       background: #7a5fff;
@@ -84,27 +102,73 @@
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
       letter-spacing: 0.5px;
       transition: 0.3s ease;
       box-shadow: 0 5px 15px rgba(122, 95, 255, 0.4);
     }
 
     button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(122, 95, 255, 0.5);
+      transform: translateY(-3px);
     }
 
-    #result, #countdown {
+    button:active::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 250px;
+      height: 250px;
+      background: rgba(255, 255, 255, 0.4);
+      transform: translate(-50%, -50%) scale(0);
+      border-radius: 50%;
+      animation: ripple 0.4s linear;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+      }
+    }
+
+    #result,
+    #countdown {
       margin-top: 20px;
       font-size: 17px;
       font-weight: 600;
       color: #2d2d2d;
+      animation: fadeInText 0.4s ease;
+    }
+
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating Balloons */
+    .balloons {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      font-size: 30px;
+      transform: translateX(-50%);
+      animation: floatUp 2.5s ease-out forwards;
+    }
+
+    @keyframes floatUp {
+      from { opacity: 0; top: 40px; }
+      to { opacity: 1; top: -20px; }
     }
   </style>
 </head>
 
 <body>
   <div class="container">
+
+    <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+
     <h2>✨ Age Calculator</h2>
     <p>Select your Date of Birth</p>
 
@@ -114,6 +178,8 @@
 
     <div id="result"></div>
     <div id="countdown"></div>
+
+    <p style="margin-top:25px; font-size:12px; color:#666;">Made with ❤️</p>
   </div>
 
   <script>
@@ -121,8 +187,7 @@
       let dob = document.getElementById("dob").value;
 
       if (!dob) {
-        document.getElementById("result").innerHTML =
-          "⚠️ Please select a valid date.";
+        document.getElementById("result").innerHTML = "⚠️ Please select a valid date.";
         return;
       }
 
@@ -130,8 +195,7 @@
       let today = new Date();
 
       if (birthDate > today) {
-        document.getElementById("result").innerHTML =
-          "⚠️ Birth date cannot be in the future.";
+        document.getElementById("result").innerHTML = "⚠️ Birth date cannot be in the future.";
         return;
       }
 
@@ -150,17 +214,21 @@
         ageMonths += 12;
       }
 
-      document.getElementById("result").innerHTML =
-        `🎉 <strong>${ageYears} Years</strong>, 
-         <strong>${ageMonths} Months</strong>, 
-         <strong>${ageDays} Days</strong> old`;
+      // Floating balloons animation on every calculation
+      let balloons = document.createElement("div");
+      balloons.className = "balloons";
+      balloons.innerHTML = "🎈🎉🎈";
+      document.querySelector(".container").appendChild(balloons);
+      setTimeout(() => balloons.remove(), 2500);
 
-      // Next Birthday Countdown
-      let nextBirthday = new Date(
-        today.getFullYear(),
-        birthDate.getMonth(),
-        birthDate.getDate()
-      );
+      // Age result with smooth animation
+      document.getElementById("result").innerHTML =
+        `🎉 <strong>${ageYears}</strong> Years, 
+         <strong>${ageMonths}</strong> Months, 
+         <strong>${ageDays}</strong> Days old`;
+
+      // Next birthday countdown
+      let nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
       if (nextBirthday < today) {
         nextBirthday.setFullYear(today.getFullYear() + 1);
       }
@@ -169,8 +237,25 @@
       let daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
       document.getElementById("countdown").innerHTML =
-        `🎂 Your next birthday is in <strong>${daysLeft} days</strong>`;
+        `🎂 Your next birthday is in <strong>${daysLeft}</strong> days`;
+    }
+
+    /* Light/Dark Theme Toggle */
+    let darkMode = false;
+
+    function toggleTheme() {
+      darkMode = !darkMode;
+
+      if (darkMode) {
+        document.body.style.background = "#1e1e1e";
+        document.body.style.backgroundSize = "cover";
+        document.querySelector(".theme-btn").innerHTML = "☀️";
+      } else {
+        document.body.style.background = "linear-gradient(135deg, #f5d7ff, #d4e1ff, #ffe7d1)";
+        document.querySelector(".theme-btn").innerHTML = "🌙";
+      }
     }
   </script>
+
 </body>
 </html>
